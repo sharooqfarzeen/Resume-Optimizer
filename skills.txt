@@ -1,0 +1,1 @@
+pymupdf, google gemini, streamlit, python
