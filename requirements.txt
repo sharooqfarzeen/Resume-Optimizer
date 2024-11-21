@@ -1,7 +1,5 @@
 streamlit
 google-generativeai
 python-dotenv
-pymupdf
-fitz
+PyMuPDF
 pillow
-frontend
