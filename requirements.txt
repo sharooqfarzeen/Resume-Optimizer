@@ -3,4 +3,4 @@ google-generativeai
 python-dotenv
 pymupdf
 fitz
-PIL
+pillow
