@@ -1,20 +1,39 @@
-import fitz  # PyMuPDF
+import pymupdf  # PyMuPDF
 from PIL import Image
 import io
 
-def pdf_to_image(file_object, max_pages=5, dpi=150):
-    # Open the PDF file using PyMuPDF with a file-like object
-    pdf_document = fitz.open(stream=file_object.read(), filetype="pdf")
+def pdf_to_image(pdf_file, max_pages=5):
+    """
+    Converts pages of a PDF file into PNG images.
+
+    Args:
+        pdf_file (UploadedFile): The PDF file uploaded using st.file_uploader.
+        max_pages (int): Maximum number of pages to convert.
+
+    Returns:
+        list: A list of PIL Image objects representing PNG images of the pages.
+    """
     images = []
     
-    # Loop through each page up to the maximum specified
-    for page_number in range(min(max_pages, pdf_document.page_count)):
-        page = pdf_document.load_page(page_number)   # Load page
-        pix = page.get_pixmap(dpi=dpi)               # Render page to image with specified DPI
+    # Open the PDF document using PyMuPDF
+    pdf_document = pymupdf.open(stream=pdf_file.read(), filetype="pdf")
+    
+    # Determine the number of pages to process
+    total_pages = pdf_document.page_count
+    pages_to_process = min(max_pages or total_pages, total_pages)
+    
+    for page_num in range(pages_to_process):
+        # Select the page
+        page = pdf_document[page_num]
         
-        # Convert the Pixmap to a PIL image
-        img = Image.open(io.BytesIO(pix.tobytes("png")))
-        images.append(img)
+        # Render the page as a pixmap
+        pixmap = page.get_pixmap()
         
+        # Convert the pixmap to a PIL Image
+        image = Image.open(io.BytesIO(pixmap.tobytes("png")))
+        images.append(image)
+    
+    # Close the PDF document
     pdf_document.close()
+    
     return images
