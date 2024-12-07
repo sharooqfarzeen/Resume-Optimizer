@@ -1,4 +1,4 @@
-## [Try the app on streamlit](https://resume-optimizer-chatbot.streamlit.app/)
+## [Try the app on Streamlit](https://resume-optimizer-chatbot.streamlit.app/)
 
 **OR**
 
