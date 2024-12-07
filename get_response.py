@@ -3,9 +3,9 @@ import streamlit as st
 import google.generativeai as genai
 
 def start_chat_session():
+
     # Fetching the API KEY
-    if "GOOGLE_API_KEY" in st.session_state:
-        genai.configure(api_key=st.session_state["GOOGLE_API_KEY"])
+    genai.configure(api_key=st.session_state["GOOGLE_API_KEY"])
 
     system_instruction = f"""
     You are an expert resume analyst. I will provide a resume as an image and a job description as text. Your task is to:
@@ -36,7 +36,7 @@ def start_chat_session():
                                 system_instruction=system_instruction)
 
     # starting chat_session
-    chat_session = model.start_chat()
+    chat_session = model.start_chat(history=[])
 
     return chat_session
 
